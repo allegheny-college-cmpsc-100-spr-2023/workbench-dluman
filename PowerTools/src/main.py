@@ -26,6 +26,11 @@ def raise_to_power(number: float = 0.0, power: float = 1) -> float:
 
 # TODO: Write function to calculates nth root of a number 
 #       by raising to fractional power
+#   name      parameters-------------------------      return type
+def calc_root(number: float = 0.0, root: float = 1) -> float:
+    # 1/power -> root
+    nth_root = raise_to_power(number = number, power = 1/root)
+    return nth_root
 
 # Print program introduction
 print("Power and root calculator", end = "\n\n")
@@ -37,10 +42,11 @@ user_pow = int(input("Enter an exponent: "))
 # TODO: Perform calculations using functions
 # Function call
 raised = raise_to_power(number = user_num, power = user_pow)
+rooted = calc_root(number = user_num, root = user_pow)
 
 # TODO: Use suffix to get the proper number suffix: 1st, 2nd...
 num_suffix = suffix.determine(user_pow)
 
 # TODO: Print results for both computations using same power
-# print(f"{user_num} raised to the {user_pow}{num_suffix} power: {raised}")
-# print(f"{user_num} taken to the {user_pow}{num_suffix} root: {rooted}")
+print(f"{user_num} raised to the {user_pow}{num_suffix} power: {raised}")
+print(f"{user_num} taken to the {user_pow}{num_suffix} root: {rooted}")
