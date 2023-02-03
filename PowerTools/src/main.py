@@ -20,6 +20,7 @@ import suffix
 #       raised to various powers.
 # Function signature
 def raise_to_power(number: float = 0.0, power: float = 1) -> float:
+    """ Raises a number to an arbitrary power """
     raised_num = number ** power
     # Sends the number back to the place we left off
     return raised_num
@@ -28,6 +29,7 @@ def raise_to_power(number: float = 0.0, power: float = 1) -> float:
 #       by raising to fractional power
 #   name      parameters-------------------------      return type
 def calc_root(number: float = 0.0, root: float = 1) -> float:
+    """ Take the nth root of an arbitrary number """
     # 1/power -> root
     nth_root = raise_to_power(number = number, power = 1/root)
     return nth_root
