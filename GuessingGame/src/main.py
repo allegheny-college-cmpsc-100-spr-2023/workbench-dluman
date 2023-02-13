@@ -15,8 +15,7 @@ Expression course.
 # Necessary imports
 import random
 
-# TODO: Write function to calculate result of various numbers 
-#       raised to various powers.
+# TODO: Write function to determine if a number is even or not.
 
 def main():
     # TODO: Ask user which version of the game to play: odds, evens, all
