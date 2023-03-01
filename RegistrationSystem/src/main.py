@@ -26,7 +26,7 @@ def display_results(rows: list = []) -> None:
     display_table(rows = rows)
 
 def gets_shirt(registrant: list = []) -> bool:
-    # TODO: Filter list for folks buying shirts
+    print(registrant[4])
     return False
 
 def set_limit(number: str = "") -> int:
@@ -42,13 +42,19 @@ def average(column: str = "") -> int:
 
 def create_row() -> list:
     """ Create a list-as-row """
+    row = []
+    id = len(ROWS) + 1
     fname = input("First name: ")
     lname = input("Last name: ")
     age = input("Age: ")
     shirts = input("How many shirts: ")
     # Return the correct information as a separate list
     return [
-
+        id,
+        fname,
+        lname,
+        age,
+        shirts
     ]
 
 def main():
@@ -71,6 +77,12 @@ def main():
             break
         # Create list to store the results of filterings
         # TODO: Complete the functionality
+        if choice == 1:
+            for person in ROWS:
+                ship_shirt = gets_shirt(registrant = person)
+        if choice == 4:
+            row = create_row()
+            ROWS.append(row)
         if choice == 5:
             display_results()
 
