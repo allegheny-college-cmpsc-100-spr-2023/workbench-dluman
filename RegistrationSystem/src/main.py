@@ -108,10 +108,13 @@ def main():
                     people.append(person)
             display_results(people)
         if choice == 3:
+            # Get average of age column
             avg_age = average("age")
+            # Get average of shirts column
             avg_shirts = average("shirt")
-            data = [['','','',avg_age,avg_shirts]]
-            display_results(data)
+            # Reset the dataset to a new one-row set
+            people.append(['','','',avg_age,avg_shirts])
+            display_results(people)
         if choice == 4:
             print("Let's gather some data:", end = "\n\n")
             row = create_row()
