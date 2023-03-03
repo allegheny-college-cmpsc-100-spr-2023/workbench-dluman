@@ -12,9 +12,6 @@ A people registration system to demonstrate:
 
 This program serves as part of the Allegheny College CMPSC 100: Computational
 Expression course.
-
-A note about this exercise: assume that ROWS And COLS exist and represent lists
-storing the individual column headers and row data
 """
 
 def display_results(rows: list = []) -> None:
@@ -26,31 +23,34 @@ def display_results(rows: list = []) -> None:
     display_table(rows = rows)
 
 def gets_shirt(registrant: list = []) -> bool:
-    print(registrant[4])
+    """ Assess if a partcipant ordered a shirt """
+    ordered_shirt = int(registrant[4])
+    if ordered_shirt > 0:
+        return True
     return False
 
 def set_limit(number: str = "") -> int:
     """ Set a numerical age limit """
-    # TODO: Return an int if a number provided
+    if number:
+        return int(number)
     return number
 
 def average(column: str = "") -> int:
     """ Computes the average of a column """
     total = 0
-    # TODO: Compute the average of a column
+    idx = COLS.index(column)
+    for row in ROWS:
+        total += int(row[idx])
     return total / len(ROWS)
 
 def create_row() -> list:
     """ Create a list-as-row """
-    row = []
-    id = len(ROWS) + 1
     fname = input("First name: ")
     lname = input("Last name: ")
     age = input("Age: ")
     shirts = input("How many shirts: ")
-    # Return the correct information as a separate list
     return [
-        id,
+        len(ROWS) + 1,
         fname,
         lname,
         age,
@@ -76,13 +76,28 @@ def main():
         if choice == 0:
             break
         # Create list to store the results of filterings
-        # TODO: Complete the functionality
+        people = []  
         if choice == 1:
             for person in ROWS:
-                ship_shirt = gets_shirt(registrant = person)
+                if gets_shirt(person):
+                    people.append(person)
+            display_results(people)
+        if choice == 2:
+            limit = set_limit(input("Minimum age: "))
+            for person in ROWS:
+                if int(person[3]) >= limit:
+                    people.append(person)
+            display_results(people)
+        if choice == 3:
+            avg_age = average("age")
+            avg_shirts = average("shirt")
+            data = [['','','',avg_age,avg_shirts]]
+            display_results(data)
         if choice == 4:
+            print("Let's gather some data:", end = "\n\n")
             row = create_row()
             ROWS.append(row)
+            save_file()
         if choice == 5:
             display_results()
 
