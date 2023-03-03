@@ -113,7 +113,9 @@ def main():
             # Get average of shirts column
             avg_shirts = average("shirt")
             # Reset the dataset to a new one-row set
-            people.append(['','','',avg_age,avg_shirts])
+            row = ['', '', '', avg_age, avg_shirts]
+            # Actually _altering_ people here
+            people.append(row)
             display_results(people)
         if choice == 4:
             print("Let's gather some data:", end = "\n\n")
