@@ -16,39 +16,58 @@ Expression course.
 
 def display_results(rows: list = []) -> None:
     """ Pass filtered results to table display """
+    # If no parameter exists, default to the global
     if not rows:
         rows = ROWS
+    # For each index, convert it to a string for rich
     for idx in range(len(ROWS)):
         ROWS[idx] = [str(elem) for elem in ROWS[idx]]
+    # Display the table pretty print style
     display_table(rows = rows)
 
 def gets_shirt(registrant: list = []) -> bool:
     """ Assess if a partcipant ordered a shirt """
+    # Get the list address for item number 5 (index 4)
     ordered_shirt = int(registrant[4])
+    # If the quantity of shirts is greater than 0, return True
+    # for a person
     if ordered_shirt > 0:
         return True
+    # In every other case return False for a person
     return False
 
 def set_limit(number: str = "") -> int:
     """ Set a numerical age limit """
+    # If a number exists at all, convert to integer version
     if number:
         return int(number)
+    # Return the data in whatever version is appropriate
     return number
 
 def average(column: str = "") -> int:
     """ Computes the average of a column """
+    # Set a catch-all variable to 0 to count number of items
     total = 0
+    # Get the index of a given column by name to find the
+    # corresponding position in the list
     idx = COLS.index(column)
+    # For each row in the larger data set
     for row in ROWS:
+        # Add the integer representation of the file to the
+        # running total
         total += int(row[idx])
+    # Return the running total divided by the number of items,
+    # which is the textbook definition of an average
     return total / len(ROWS)
 
 def create_row() -> list:
     """ Create a list-as-row """
+    # Take inputs for each necessary item of data
     fname = input("First name: ")
     lname = input("Last name: ")
     age = input("Age: ")
     shirts = input("How many shirts: ")
+    # Return data in list form
     return [
         len(ROWS) + 1,
         fname,
