@@ -44,7 +44,7 @@ def set_limit(number: str = "") -> int:
     # Return the data in whatever version is appropriate
     return number
 
-def average(column: str = "") -> int:
+def average(column: str = "", rows: list = []) -> int:
     """ Computes the average of a column """
     # Set a catch-all variable to 0 to count number of items
     total = 0
@@ -52,13 +52,15 @@ def average(column: str = "") -> int:
     # corresponding position in the list
     idx = COLS.index(column)
     # For each row in the larger data set
-    for row in ROWS:
+    if not rows:
+        rows = ROWS
+    for row in rows:
         # Add the integer representation of the file to the
         # running total
         total += int(row[idx])
     # Return the running total divided by the number of items,
     # which is the textbook definition of an average
-    return total / len(ROWS)
+    return total / len(rows)
 
 def create_row() -> list:
     """ Create a list-as-row """
@@ -77,6 +79,7 @@ def create_row() -> list:
     ]
 
 def main():
+    global ROWS
     # Menu
     print("REGISTRATION STATION", end = "\n\n")
     print("Choose from the following options:", end = "\n")
@@ -91,27 +94,31 @@ def main():
     while True:
         # Resolve menu
         choice = int(input("Choose an option by number: "))
+        filters = input("Add extra filters separated by comma: ")
+        filter_list = filters.split(",")
         # If exit, well, exit
         if choice == 0:
             break
         # Create list to store the results of filterings
-        people = []  
+        people = []
         if choice == 1:
             for person in ROWS:
                 if gets_shirt(person):
                     people.append(person)
             display_results(people)
-        if choice == 2:
+        if filter_list:
+            ROWS = people
+        if choice == 2 or "2" in filter_list:
             limit = set_limit(input("Minimum age: "))
             for person in ROWS:
                 if int(person[3]) >= limit:
                     people.append(person)
             display_results(people)
-        if choice == 3:
+        if choice == 3 or "3" in filter_list:
             # Get average of age column
-            avg_age = average("age")
+            avg_age = average("age", ROWS)
             # Get average of shirts column
-            avg_shirts = average("shirt")
+            avg_shirts = average("shirt", ROWS)
             # Reset the dataset to a new one-row set
             row = ['', '', '', avg_age, avg_shirts]
             # Actually _altering_ people here
