@@ -1,42 +1,45 @@
 import json
+from Pump import Pump
 
 # TODO: Create Tower class
+class Tower:
 
-    # TODO: Create constructor which:
-    #       0. Takes an explicit pump parameter
-    #       1. Connects to the pump
-    #       2. Loads a file called ".tower_fill"
-    #       3. Sets its level and capacity from the file
+    def __init__(self):
+        """ Constructor: basic 'blueprint' """
+        # __init__ializing the pump
+        self.pump = Pump()
+        with open(".tower_fill", "r") as fill_data:
+            data = json.load(fill_data)
+        self.level = data["level"]
+        self.capacity = data["capacity"]
     
-    # TODO: Create a __str__ method to provide the level of
-    #       the tower at any given moment using an f-string
+    def __str__(self) -> str:
+        return f"FILL LEVEL: {self.level}"
     
-    # TODO: Write fill method which:
-    #       0. Takes no explicit parameters
-    #       1. Returns a boolean
-    #       2. Ensures there's still tower capacity
-    #       3. Uses the pump if possible
-    #       4. Adds the flow level to the tower level
-    #       5. Records the new level
+    def fill(self) -> bool:
+        # This uses Pump to get either 20 or 0
+        flow = self.pump.use()
+        if flow and self.is_not_full():
+            self.level += flow
+            self.record()
+            return True
+        return False
+        
+    def dispense(self, volume: float = 20) -> None:
+        self.level -= volume
+        self.record()
+            
+    def record(self) -> None:
+        data = {
+            "level": self.level,
+            "capacity": self.capacity
+        }
+        with open(".tower_fill", "w") as fill_data:
+            # Send the data, then the file
+            json.dump(data, fill_data)
 
-    # TODO: Write a dispense method which:
-    #       0. Takes no explicit parameters
-    #       1. Takes a parameter for a given volume
-    #       2. Ensures that the tower has that much water
-    #       3. Decrements the level by the volume dispensed
-    #       4. Records the new level
-
-    # TODO: Write a record method which:
-    #       1. Takes no explicit parameters
-    #       2. Sets up a data dictionary with level and capacity as keys
-    #       3. Writes the new levels to the .tower_fill file
-
-    # TODO: Write a method called "is_full" which:
-    #       0. Takes no explicit parameters
-    #       1. Returns a boolean, which
-    #       1a. Tells us if the level is over capacity
-
-    # TODO: Write a methods called "is_empty" which:
-    #       0. Takes no explicit parameters    
-    #       1. Returns a boolean, which
-    #       1a. Tells us if the level is above 0
+    def is_not_full(self) -> bool:
+        return self.level < self.capacity
+    
+    def is_empty(self) -> bool:
+        return self.level > 0

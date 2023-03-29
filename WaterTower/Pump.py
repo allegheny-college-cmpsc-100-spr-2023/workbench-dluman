@@ -1,24 +1,28 @@
 import json
 
-# TODO: Write class declaration for the Pump
+class Pump:
 
-    # TODO: Create a constructor which:
-    #       0. Takes no explicit parameters
-    #       1. Sets a property called "throughput" to 20
+    def __init__(self):
+        """ Constructor """
+        self.throughput = 20
 
-    # TODO: Create method called "request_capacity" which:
-    #       0. Takes no explicit parameters
-    #       1. Returns a boolean
-    #       2. Opens the reservoir file
-    #       3. Returns if there's enough capacity to match throughput
+    def __str__(self) -> str:
+        """ String representation """
+        return str(self.throughput)
 
-    # TODO: Create method called "update_capacity" which:
-    #       0. Takes no explicit parameters
-    #       1. Opens the reservoir file and updates it to match
-    #          the amount taken via throughput of the pump
+    def request_capacity(self) -> bool:
+        """ Checks if there's enough water in the reservoir """
+        with open("/world/reservoir", "r") as fh:
+            self.reservoir = json.load(fh)
+        return self.reservoir["level"] >= self.throughput
 
-    # TODO: Create a "use" method, which:
-    #       0. Takes no explicit parameters
-    #       1. Returns an integer which is
-    #       1a. Equal to the throughput if there's water in the reservoir
-    #       1b. Equal to 0 if there's nothing left
+    def update_capacity(self) -> None:
+        with open("/world/reservoir", "w") as fh:
+            self.reservoir["level"] -= self.throughput
+            json.dump(self.reservoir, fh)
+
+    def use(self) -> int:
+        if self.request_capacity():
+            self.update_capacity()
+            return self.throughput
+        return 0

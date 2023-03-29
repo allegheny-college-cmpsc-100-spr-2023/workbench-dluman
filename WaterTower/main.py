@@ -1,14 +1,14 @@
 # TODO: Import the water tower
+# import Pump
+from WaterTower import Tower
 
 def main():
-    # TODO: Instantiate the water tower
+    tower = Tower()
+    tower.fill()
+    print(tower)
     
-    # TODO: Fill the tower
-
-    # TODO: Empty the water tower to a desired level
-    #       (for this exercise, 20)
-    
-    # TODO: Print final tower level
-
+    while tower.level > 20:
+        tower.dispense()
+    print(tower)
 if __name__ == "__main__":
     main()
