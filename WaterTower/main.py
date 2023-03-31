@@ -8,7 +8,7 @@ def main():
     print(tower)
     
     while tower.level > 20:
-        tower.dispense()
+        tower.dispense(volume = 40)
     print(tower)
 if __name__ == "__main__":
     main()
